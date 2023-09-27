@@ -9,7 +9,6 @@ const renderer = new THREE.WebGLRenderer({
   canvas: document.querySelector('#bg'),
 });
 
-renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 camera.position.setZ(50);
 camera.position.setX(-30);
@@ -26,29 +25,11 @@ const geometry = new THREE.SphereGeometry(radius, widthSegments, heightSegments)
 const material = new THREE.PointsMaterial({
   color: '#ffccff',
   size: 0.4, // in world units
-  emissive: '#ffccff' ,// Add an emissive color to make it radiant
+  emissive: '#ffccff', // Add an emissive color to make it radiant
 });
-
 
 const points = new THREE.Points(geometry, material);
 scene.add(points);
-scene.add(points);
-
-
-
-// Moon
-const moonTexture = new THREE.TextureLoader().load('moon.jpg');
-const normalTexture = new THREE.TextureLoader().load('normal.jpg');
-const moon = new THREE.Mesh(
-  new THREE.SphereGeometry(3, 32, 32),
-  new THREE.MeshStandardMaterial({
-    map: moonTexture,
-    normalMap: normalTexture,
-  })
-);
-
-
-
 
 // Stars
 function addStar() {
@@ -61,7 +42,6 @@ function addStar() {
   const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
   star.position.set(x, y, z);
   scene.add(star);
-  
 }
 
 // Add more stars (customize the number as needed)
@@ -70,11 +50,8 @@ Array(500).fill().forEach(addStar);
 // Scroll Animation
 function moveCamera() {
   const t = document.body.getBoundingClientRect().top;
-  moon.rotation.x += 0.05;
-  moon.rotation.y += 0.075;
-  moon.rotation.z += 0.05;
 
-  // Rotate the 'points' sphere along with the Moon
+  // Rotate the 'points' sphere
   points.rotation.x += 0.01;
   points.rotation.y += 0.005;
   points.rotation.z += 0.01;
@@ -91,19 +68,15 @@ moveCamera();
 function animate() {
   requestAnimationFrame(animate);
 
-  // Rotate the Moon
-  moon.rotation.x += 0.01;
-  moon.rotation.y += 0.005;
-  moon.rotation.z += 0.01;
-
-
-
   controls.update();
 
   renderer.render(scene, camera);
 }
 
 animate();
+
+// Additional code for navigation and job titles can remain as is
+
 document.addEventListener("DOMContentLoaded", function () {
   const sections = document.querySelectorAll("section"); // Get all sections
   const navLinks = document.querySelectorAll("nav ul li a"); // Get all navigation links
@@ -168,6 +141,11 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   });
 });
+
+
+
+
+
 
 
 
